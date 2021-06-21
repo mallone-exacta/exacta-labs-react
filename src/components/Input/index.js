@@ -1,14 +1,24 @@
-import * as S from "./styles.js";
+import { useRef } from "react";
+import * as S from "./styles";
 
-function Input({ icon, value, onChange }) {
+function Input({ icon, value, onChange, onCancel }) {
+  const inputRef = useRef();
+
   return (
     <S.Wrapper>
       {icon}
 
       <S.InputWrapper>
-        <S.Input value={value} onChange={onChange} />
+        <S.Input ref={inputRef} value={value} onChange={onChange} />
 
-        <S.CancelIcon />
+        {value && (
+          <S.CancelIcon
+            onClick={() => {
+              onCancel();
+              inputRef.current.focus();
+            }}
+          />
+        )}
       </S.InputWrapper>
     </S.Wrapper>
   );
